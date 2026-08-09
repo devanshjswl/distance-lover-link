@@ -156,10 +156,10 @@ export function usePresenceSync(intervalMs = 60_000) {
 
     if (privacy.shareBattery) {
       const { battery, charging } = await readBattery();
-      payload.battery = battery;
-      payload.charging = charging;
+      payload["battery"] = battery;
+      payload["charging"] = charging;
     } else {
-      payload.battery = null;
+      payload["battery"] = null;
     }
 
     if (privacy.shareLocation && "geolocation" in navigator) {
@@ -172,11 +172,11 @@ export function usePresenceSync(intervalMs = 60_000) {
       );
       if (position) {
         const { latitude, longitude, speed, accuracy } = position.coords;
-        payload.lat = latitude;
-        payload.lon = longitude;
-        payload.accuracy = accuracy ?? null;
-        payload.speed = speed ?? null;
-        payload.movement =
+        payload["lat"] = latitude;
+        payload["lon"] = longitude;
+        payload["accuracy"] = accuracy ?? null;
+        payload["speed"] = speed ?? null;
+        payload["movement"] =
           speed === null || speed === undefined
             ? "unknown"
             : speed < 0.5
@@ -187,17 +187,17 @@ export function usePresenceSync(intervalMs = 60_000) {
 
         if (privacy.shareWeather) {
           const weather = await fetchWeather(latitude, longitude);
-          payload.weatherTemp = weather.temp;
-          payload.weatherCode = weather.code;
-          payload.city = weather.city;
+          payload["weatherTemp"] = weather.temp;
+          payload["weatherCode"] = weather.code;
+          payload["city"] = weather.city;
         }
 
         const destination = places[0];
         if (destination) {
           const km = haversineKm({ lat: latitude, lon: longitude }, destination);
           const kmh = speed && speed > 0.5 ? speed * 3.6 : 25;
-          payload.etaMinutes = Math.round((km / kmh) * 60);
-          payload.destinationName = destination.title;
+          payload["etaMinutes"] = Math.round((km / kmh) * 60);
+          payload["destinationName"] = destination.title;
           if (privacy.geofenceAlerts && km <= (destination.radiusKm || 0.3)) {
             if (lastGeofence.current !== destination.id) {
               lastGeofence.current = destination.id;
@@ -216,10 +216,10 @@ export function usePresenceSync(intervalMs = 60_000) {
         }
       }
     } else {
-      payload.lat = null;
-      payload.lon = null;
-      payload.movement = "unknown";
-      payload.etaMinutes = null;
+      payload["lat"] = null;
+      payload["lon"] = null;
+      payload["movement"] = "unknown";
+      payload["etaMinutes"] = null;
     }
 
     await write.set(session.uid, payload as Record<string, unknown>);
