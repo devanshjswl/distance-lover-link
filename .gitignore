@@ -16,9 +16,23 @@ dist-ssr
 .nitro
 *.local
 
+# Environment variables (never commit real secrets/config)
+.env
+.env.local
+.env.*.local
+
+# Vercel
+.vercel
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
+
+# Firebase local emulator/cache
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
 
 # Editor directories and files
 .vscode/*
