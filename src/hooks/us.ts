@@ -146,12 +146,13 @@ export function usePresenceSync(intervalMs = 60_000) {
 
   const publish = useCallback(async () => {
     if (!session?.uid || !coupleId) return;
-    const payload: Partial<Presence> & { id: string } = {
+    const payload: Record<string, unknown> = {
       id: session.uid,
       name: profile?.name ?? session.name,
-      lastActive: privacy.shareActivity ? Date.now() : null ?? undefined,
+      lastActive: privacy.shareActivity ? Date.now() : null,
       updatedAt: Date.now(),
     };
+
 
     if (privacy.shareBattery) {
       const { battery, charging } = await readBattery();
