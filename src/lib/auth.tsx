@@ -34,7 +34,7 @@ async function ensureProfile(session: Session) {
   const existing = await getProfile(session.uid);
   if (existing?.inviteCode) return;
   await saveProfile(session.uid, {
-    name: existing?.name || session.name || session.email.split("@")[0],
+    name: existing?.name || session.name || (session.email.split("@")[0] ?? "there"),
     email: session.email,
     photo: session.photo ?? null,
     inviteCode: existing?.inviteCode ?? makeCode(),
@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const next: Session = {
             uid: user.uid,
             email: user.email ?? "",
-            name: user.displayName ?? (user.email ?? "").split("@")[0],
+            name: user.displayName ?? ((user.email ?? "").split("@")[0] ?? "there"),
             photo: user.photoURL,
           };
           setSession(next);
