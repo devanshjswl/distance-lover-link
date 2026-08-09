@@ -1,0 +1,13 @@
+{
+  "name": "Us — private space for two",
+  "short_name": "Us",
+  "description": "A quiet, private app for long-distance couples: presence, calendar, check-ins, study sessions, memories and chat.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9f8f6",
+  "theme_color": "#d97757",
+  "icons": [
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

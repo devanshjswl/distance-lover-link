@@ -1,24 +1,42 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { AppShell } from "@/components/AppShell";
+import { CountdownHero } from "@/components/home/CountdownHero";
+import { PresencePair } from "@/components/home/PresencePair";
+import { CheckInCard } from "@/components/home/CheckInCard";
+import { StudyCard } from "@/components/home/StudyCard";
+import { UpcomingDates } from "@/components/home/UpcomingDates";
+import { NudgeRow } from "@/components/home/NudgeRow";
+import { MemoryGlimpse } from "@/components/home/MemoryGlimpse";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Us — a private space for long-distance couples" },
+      {
+        name: "description",
+        content:
+          "Us keeps two people close: live location with battery and ETA, shared calendar, daily check-ins, study sessions, memories, and private chat.",
+      },
+      { property: "og:title", content: "Us — a private space for long-distance couples" },
+      {
+        property: "og:description",
+        content: "Live presence, shared calendar, check-ins, study sessions and memories for two.",
+      },
+    ],
+  }),
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function HomePage() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <AppShell>
+      <CountdownHero />
+      <PresencePair />
+      <CheckInCard />
+      <StudyCard />
+      <UpcomingDates />
+      <NudgeRow />
+      <MemoryGlimpse />
+    </AppShell>
   );
 }
