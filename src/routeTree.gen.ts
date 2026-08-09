@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as DatesRouteImport } from './routes/dates'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as UsRouteImport } from './routes/us'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const GalleryRoute = GalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UsRoute = UsRouteImport.update({
+  id: '/us',
+  path: '/us',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/dates': typeof DatesRoute
   '/gallery': typeof GalleryRoute
+  '/us': typeof UsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/dates': typeof DatesRoute
   '/gallery': typeof GalleryRoute
+  '/us': typeof UsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/chat': typeof ChatRoute
   '/dates': typeof DatesRoute
   '/gallery': typeof GalleryRoute
+  '/us': typeof UsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/dates' | '/gallery'
+  fullPaths: '/' | '/chat' | '/dates' | '/gallery' | '/us'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/dates' | '/gallery'
-  id: '__root__' | '/' | '/chat' | '/dates' | '/gallery'
+  to: '/' | '/chat' | '/dates' | '/gallery' | '/us'
+  id: '__root__' | '/' | '/chat' | '/dates' | '/gallery' | '/us'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   ChatRoute: typeof ChatRoute
   DatesRoute: typeof DatesRoute
   GalleryRoute: typeof GalleryRoute
+  UsRoute: typeof UsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/us': {
+      id: '/us'
+      path: '/us'
+      fullPath: '/us'
+      preLoaderRoute: typeof UsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChatRoute: ChatRoute,
   DatesRoute: DatesRoute,
   GalleryRoute: GalleryRoute,
+  UsRoute: UsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -79,7 +79,10 @@ function PlacesCard() {
         { enableHighAccuracy: true, timeout: 10_000 },
       ),
     );
-    if (!position) return toast.error("Could not read your location");
+    if (!position) {
+      toast.error("Could not read your location");
+      return;
+    }
     await write.add({
       title: title.trim(),
       lat: position.coords.latitude,
