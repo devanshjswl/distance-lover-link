@@ -19,6 +19,7 @@ const config = {
   storageBucket: pick("VITE_FIREBASE_STORAGE_BUCKET", "usapp-d44e6.firebasestorage.app"),
   messagingSenderId: pick("VITE_FIREBASE_MESSAGING_SENDER_ID", "76460906083"),
   appId: pick("VITE_FIREBASE_APP_ID", "1:76460906083:web:d00a11034d64e0c18c8a56"),
+  measurementId: pick("VITE_FIREBASE_MEASUREMENT_ID", "G-GBRXEMZXKT"),
 };
 
 export const firebaseConfigured = Boolean(config.apiKey && config.projectId && config.appId);
