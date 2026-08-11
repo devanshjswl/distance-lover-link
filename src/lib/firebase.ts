@@ -1,20 +1,28 @@
 /**
  * Firebase bootstrap.
  *
- * Web config values are publishable by design, so they live in VITE_ env vars.
- * When they are absent the app falls back to a local device-only backend so the
- * whole product stays testable before keys are wired up.
+ * Web config values are publishable by design (access control lives in
+ * firestore.rules / storage.rules), so they ship with the bundle as defaults
+ * and can still be overridden per-environment with VITE_FIREBASE_* env vars.
  */
+const env = import.meta.env as Record<string, string | undefined>;
+
+const pick = (key: string, fallback: string) => {
+  const value = env[key];
+  return value && value.trim() ? value.trim() : fallback;
+};
+
 const config = {
-  apiKey: import.meta.env["VITE_FIREBASE_API_KEY"] as string | undefined,
-  authDomain: import.meta.env["VITE_FIREBASE_AUTH_DOMAIN"] as string | undefined,
-  projectId: import.meta.env["VITE_FIREBASE_PROJECT_ID"] as string | undefined,
-  storageBucket: import.meta.env["VITE_FIREBASE_STORAGE_BUCKET"] as string | undefined,
-  messagingSenderId: import.meta.env["VITE_FIREBASE_MESSAGING_SENDER_ID"] as string | undefined,
-  appId: import.meta.env["VITE_FIREBASE_APP_ID"] as string | undefined,
+  apiKey: pick("VITE_FIREBASE_API_KEY", "AIzaSyDF3g7JY8PQjTaML-GLDkjLNfGgWM65Ylk"),
+  authDomain: pick("VITE_FIREBASE_AUTH_DOMAIN", "usapp-d44e6.firebaseapp.com"),
+  projectId: pick("VITE_FIREBASE_PROJECT_ID", "usapp-d44e6"),
+  storageBucket: pick("VITE_FIREBASE_STORAGE_BUCKET", "usapp-d44e6.firebasestorage.app"),
+  messagingSenderId: pick("VITE_FIREBASE_MESSAGING_SENDER_ID", "76460906083"),
+  appId: pick("VITE_FIREBASE_APP_ID", "1:76460906083:web:d00a11034d64e0c18c8a56"),
 };
 
 export const firebaseConfigured = Boolean(config.apiKey && config.projectId && config.appId);
+
 
 type Bundle = {
   app: import("firebase/app").FirebaseApp;
